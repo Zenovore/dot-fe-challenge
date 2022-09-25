@@ -8,7 +8,7 @@ import { setQuizScore, setIncorrectAnswer } from '../redux/quizSlice'
 import { useNavigate } from 'react-router-dom'
 import { Spinner } from 'flowbite-react'
 
-
+import Timer from '../components/Timer'
 
 
 export const Quiz = () => {
@@ -18,8 +18,9 @@ export const Quiz = () => {
     let path = `/score`; 
     navigate(path);
   }
+
   const quizState = useSelector(store => store.quiz)
-  // urlGet = '/api.php?amount=10&category=' + quizState.quizCategory + '&type=' + quizState.quizType
+
   const url = `/api.php?amount=10&category=${quizState.quizCategory}&type=${quizState.quizType}`
   const {data, err, loading} = useAxios({url : url})
   const dispatch = useDispatch();
@@ -55,25 +56,31 @@ export const Quiz = () => {
     }
   }
 
-
+  const insert = (arr, index, newItem) => [
+    // part of the array before the specified index
+    ...arr.slice(0, index),
+    // inserted item
+    newItem,
+    // part of the array after the specified index
+    ...arr.slice(index)
+  ]
   console.log(data)
   if (data){
-    var answer 
-    // Randomize correct answer position so it wont stay in the same position 
+    var answer
     if (data.results[questionIndex].type === 'multiple'){
       const randomNumber = Math.floor(Math.random() * 3);
-      answer = data.results[questionIndex].incorrect_answers
-      answer.splice(randomNumber, 0, data.results[questionIndex].correct_answer)
+      var newAnswer = data.results[questionIndex].incorrect_answers
+      answer = insert(newAnswer, randomNumber, data.results[questionIndex].correct_answer)
     } else {
       answer = ["True", "False"]
-      // answer.push(data.results[questionIndex].correct_answer)
     }
     return (
       <div>
+        <Timer></Timer>
         <div className="flex flex-col px-24 py-12">
-          <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white ">Question {questionIndex+1}</h1>
+          <h1 className="text-3xl font-bold tracking-tight dark:text-white ">Question {questionIndex+1}</h1>
           {/* <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white ">Score {quizState.quizScore}</h1> */}
-          <h1 className="text-2xl font-medium tracking-tight text-gray-900 dark:text-white py-4">{data.results[questionIndex].question}</h1>
+          <h1 className="text-2xl font-medium tracking-tight dark:text-white py-4">{data.results[questionIndex].question}</h1>
           <div className='flex flex-col gap-8 '>
             {answer.map((answer, index) => {
               return (

@@ -9,15 +9,15 @@ function App() {
   return (
     <Routes>
       <Route path="/login" element={<Login />}></Route>
-      {/* <Route exact path="/" element={<ProtectedPages />}> */}
-      <Route path="/" element={<Category />}></Route>
-      {/* </Route> */}
-      {/* <Route exact path="/quiz" element={<ProtectedPages />}> */}
-      <Route path="/quiz" element={<Quiz />}></Route>
-      {/* </Route> */}
-      {/* <Route exact path="/score" element={<ProtectedPages />}> */}
-      <Route path="/score" element={<Score />}></Route>
-      {/* </Route> */}
+      <Route exact path="/" element={<ProtectedPages />}>
+        <Route path="/" element={<Category />}></Route>
+      </Route>
+      <Route exact path="/quiz" element={<ProtectedPages />}>
+        <Route path="/quiz" element={<Quiz />}></Route>
+      </Route>
+      <Route exact path="/score" element={<ProtectedPages />}>
+        <Route path="/score" element={<Score />}></Route>
+      </Route>
     </Routes>
   );
 }

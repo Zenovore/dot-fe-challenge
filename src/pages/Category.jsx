@@ -1,16 +1,20 @@
 import { Button, Spinner } from 'flowbite-react'
 import React from 'react'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { InputCategory } from '../components/InputCategory'
+import { setDeadline } from '../redux/quizSlice'
 import { useAxios } from '../services/api'
 
-
-
-
 export const Category = () => {
+  const dispatch = useDispatch()
+
   let navigate = useNavigate(); 
   const routeChange = () =>{ 
     let path = `/quiz`; 
+    dispatch(setDeadline({
+      deadline: new Date()
+    }))
     navigate(path);
   }
 
@@ -32,10 +36,10 @@ export const Category = () => {
 
   if (data){
     return (
-      <div className='flex flex-col w-80 mx-auto my-24'>
+      <div className='flex flex-col w-80 mx-auto my-24 bg-[#1f2937] py-8 px-4 rounded-lg gap-4'>
         <InputCategory label="Category" options={data.trivia_categories}></InputCategory>
         <InputCategory label="Type" options={typeOptions}></InputCategory>
-        <Button onClick={() => {routeChange()}}>GOTO QUIZ PAGE</Button>
+        <Button onClick={() => {routeChange()}}>Take Quiz</Button>
       </div>
     )
   }
