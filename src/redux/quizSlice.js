@@ -26,8 +26,16 @@ const quizSlice = createSlice({
     },
     setDeadline: (state, action) => {
       state.deadline = new Date(
-        Date.parse(action.payload.deadline) + 5 * 60 * 1000
+        Date.parse(action.payload.deadline) + 20 * 1000
       );
+    },
+    setDefault: (state) => {
+      state.quizCategory = "9";
+      state.quizType = "multiple";
+      state.quizScore = 0;
+      state.questionNumber = 10;
+      state.incorrectAnswer = 0;
+      state.deadline = new Date(Date.parse(new Date()));
     },
   },
 });
@@ -37,5 +45,6 @@ export const {
   setQuizScore,
   setIncorrectAnswer,
   setDeadline,
+  setDefault,
 } = quizSlice.actions;
 export default quizSlice.reducer;

@@ -7,8 +7,8 @@ import { useAxios } from '../services/api'
 import { setQuizScore, setIncorrectAnswer } from '../redux/quizSlice'
 import { useNavigate } from 'react-router-dom'
 import { Spinner } from 'flowbite-react'
-
 import Timer from '../components/Timer'
+import { decode } from 'html-entities'
 
 
 export const Quiz = () => {
@@ -80,7 +80,7 @@ export const Quiz = () => {
         <div className="flex flex-col px-24 py-12">
           <h1 className="text-3xl font-bold tracking-tight dark:text-white ">Question {questionIndex+1}</h1>
           {/* <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white ">Score {quizState.quizScore}</h1> */}
-          <h1 className="text-2xl font-medium tracking-tight dark:text-white py-4">{data.results[questionIndex].question}</h1>
+          <h1 className="text-2xl font-medium tracking-tight dark:text-white py-4">{decode(data.results[questionIndex].question) }</h1>
           <div className='flex flex-col gap-8 '>
             {answer.map((answer, index) => {
               return (

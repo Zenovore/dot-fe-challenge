@@ -42,7 +42,7 @@ export const Login = () => {
               />
         </div>
         <Button onClick={() => {
-          setCookie("isLoggedIn",true, {path:"/", maxAge: 60})
+          setCookie("isLoggedIn",true, {path:"/", maxAge: 1800})
           routeChange() 
           }}>Login</Button>
       </div>

@@ -1,11 +1,13 @@
 import { Button } from 'flowbite-react'
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { setDefault } from '../redux/quizSlice'
 
 
 export const Score = () => {
   const quizState = useSelector(store => store.quiz)
+  const dispatch = useDispatch();
 
   let navigate = useNavigate(); 
   const routeChange = () =>{ 
@@ -14,8 +16,7 @@ export const Score = () => {
   }
 
   const handleClick = () => {
-
-    localStorage.removeItem('persistantState')
+    dispatch(setDefault())
     routeChange()
   }
   return (
